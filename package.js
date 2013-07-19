@@ -9,3 +9,8 @@ Package.on_use(function (api) {
   api.use('underscore', 'server')
   api.add_files(['aa_semanticity.coffee', 'getters.coffee'], 'server');
 });
+
+Package.on_test(function (api) {
+  api.use(['semanticity','tinytest', 'test-helpers'], ['client', 'server']);
+  api.add_files('tests.js', ['server']);
+});
