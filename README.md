@@ -1,10 +1,22 @@
-meteor-semanticity
+Semanticity
 ==================
 
 [![Build Status](https://travis-ci.org/CMToups/meteor-semanticity.png)](https://travis-ci.org/CMToups/meteor-semanticity)
 
-This package manages resource (collection) relationships in meteor js.
+This package manages resource (collection) relationships in meteor js, via meteorite. Not production ready!
 
-I will expand this description later.
+This is a very simple API that lets you store relationships as subject-predicate-target. Relationships refer to the correlation between two objects stored in one or more **local** collections. It derives from, but is not complient with, *W3C Semantic Web* standards.
 
-Not production ready, obviously.
+This is not a triple-store database engine but rather an extensible API for implementing them. 
+Current implmentaion only uses Meteor Collections to save relations.
+
+### How to setup
+
+Get the package from Atmosphere
+`
+mrt add semanticity
+`
+and add to you app
+`
+semanticity = new Semanticity();
+`
