@@ -7,10 +7,10 @@ Package.describe({
 Package.on_use(function (api) {
   api.use('coffeescript', 'server')
   api.use('underscore', 'server')
-  api.add_files(['aa_semanticity.coffee', 'queries.coffee'], 'server');
+  api.add_files(['$semanticity.coffee', 'queries.coffee'], 'server');
 });
 
 Package.on_test(function (api) {
   api.use(['semanticity','tinytest', 'test-helpers', 'coffeescript', 'smart-collections'], ['client', 'server']);
-  api.add_files('tests/core-tests.coffee', ['server']);
+  api.add_files(['tests/core-tests.coffee', 'tests/query-tests.coffee'], ['server']);
 });

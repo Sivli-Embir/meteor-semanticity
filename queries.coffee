@@ -1,7 +1,20 @@
-include Semanticity, getWithSubject: (subject) ->
-  @collection.find({'subject.col': subject});
+include Semanticity, findWithSubject: (subject, options) ->
+  @collection.find({'subject.col': subject}, options);
 
-include Semanticity, getSubjects: (subject, predicate ,target, id, options) ->
+include Semanticity, findWithSubjectIde: (subject, id, options) ->
+  @collection.find({'subject.col': subject, 'subject.id': id}, options);
+
+include Semanticity, findWithPredicate: (predicate, options) ->
+  @collection.find({'predicate': predicate}, options);
+
+include Semanticity, findWithTarget: (target, options) ->
+  @collection.find({'target.col': target}, options);
+
+include Semanticity, findWithSubjectId: (subject, id, options) ->
+  @collection.find({'subject.col': subject, 'subject.id': id}, options);
+
+#not sure about everything under here, most of it smells and looks YAGTNI
+include Semanticity, getSubjectIds: (subject, predicate ,target, id, options) ->
   query = {'subject.col': subject, predicate: predicate, target: {col: target, id: id}};
   filter = {fields: {'subject.id': 1}};
 
@@ -11,8 +24,7 @@ include Semanticity, getSubjects: (subject, predicate ,target, id, options) ->
     ids.push(sem.subject.id)
   ids
 
-include Semanticity, getWithTarget: (target) ->
-  @collection.find({'target.col': target});
+
 
 include Semanticity, getTarget: (subject, predicate ,target, id, options) ->
   query = {'target.col': target, predicate: predicate, subject: {col: subject, id: id}};
@@ -24,7 +36,7 @@ include Semanticity, getTarget: (subject, predicate ,target, id, options) ->
     ids.push(sem.target.id)
   ids;
 
-include Semanticity, get: (args, options) ->
+include Semanticity, find: (args, options) ->
   ### possible arguments (args)
 
       subjectCol -- subject collection name

@@ -1,3 +1,4 @@
+# no db isolation in Tinytest *ANGRY FACE*
 semanticity = new Semanticity();
 s1 = new Semanticity(new Meteor.Collection('1_test'))
 s2 = new Semanticity(new Meteor.Collection('2_test'))
@@ -22,22 +23,22 @@ Tinytest.add 'Semanticity - core - constructor should take any kind of collectio
   test.equal(s4.collection._name, 'smart')
 
 Tinytest.add 'Semanticity - create - should create a valid triple', (test) ->
-  id = semanticity.create({col: 'sub',id: 'adfjksajkl'}, 'predicate', {col: 'sub',id:'adfjksajkl'})
-  test.equal({"subject":{"col":"sub","id":"adfjksajkl"},"predicate":"predicate","target":{"col":"sub","id":"adfjksajkl"},"_id":id}, semanticity.collection.findOne(id))
+  id = semanticity.create({col: 'sub',id: 'adfjksajkl'}, 'predicate', {col: 'tar',id:'adfjksajkl'})
+  test.equal({"subject":{col:"sub", id:"adfjksajkl"}, predicate:"predicate", target:{col:"tar", id:"adfjksajkl"}, _id: id}, semanticity.collection.findOne(id))
 
 
 Tinytest.add 'Semanticity - create - should not create a triple if field not given', (test) ->
   #subject col
   test.throws ->
-    semanticity.create({id: 'adfjksajkl'}, 'string', {col: 'sub', id:'adfjksajkl'})
+    semanticity.create({id: 'adfjksajkl'}, 'string', {col: 'tar', id:'adfjksajkl'})
  
   #subject id
   test.throws ->
-    semanticity.create({col: 'sub'}, 'string', {col: 'sub', id:'adfjksajkl'})
+    semanticity.create({col: 'sub'}, 'string', {col: 'tar', id:'adfjksajkl'})
  
   #predicate
   test.throws ->
-    semanticity.create({col: 'sub', id: 'sub'}, {}, {col: 'sub',id:'adfjksajkl'})
+    semanticity.create({col: 'sub', id: 'adfjksajkl'}, {}, {col: 'tar',id:'adfjksajkl'})
  
   #target col
   test.throws ->
@@ -45,41 +46,41 @@ Tinytest.add 'Semanticity - create - should not create a triple if field not giv
  
   #target id
   test.throws ->
-    semanticity.create({col: 'sub', id: 'adfjksajkl'}, 'string', {col: 'sub'})
+    semanticity.create({col: 'sub', id: 'adfjksajkl'}, 'string', {col: 'tar'})
  
 
 
 Tinytest.add 'Semanticity - create - should not create a  triple if field is invalid', (test) ->
   #subject col
   test.throws ->
-    semanticity.create({col: '', id: 'sub'}, 'string', {col: 'sub',id:'adfjksajkl'})
+    semanticity.create({col: '', id: 'adfjksajkl'}, 'string', {col: 'tar',id:'adfjksajkl'})
  
   #subject id
   test.throws ->
-    semanticity.create({col: 'sub', id: ''}, 'string', {col: 'sub',id:'adfjksajkl'})
+    semanticity.create({col: 'sub', id: ''}, 'string', {col: 'tar',id:'adfjksajkl'})
  
   #predicate
   test.throws ->
-    semanticity.create({col: 'sub', id: 'sub'}, '', {col: 'sub',id:'adfjksajkl'})
+    semanticity.create({col: 'sub', id: 'adfjksajkl'}, '', {col: 'tar',id:'adfjksajkl'})
  
   #target col
   test.throws ->
-    semanticity.create({col: 'sub', id: 'sub'}, 'string', {col: '',id:'adfjksajkl'})
+    semanticity.create({col: 'sub', id: 'adfjksajkl'}, 'string', {col: '',id:'adfjksajkl'})
  
   #target id
   test.throws ->
-    semanticity.create({col: 'sub', id: 'sub'}, 'string', {col: 'sub',id:''})
+    semanticity.create({col: 'sub', id: 'adfjksajkl'}, 'string', {col: 'tar',id:''})
  
 
 
 Tinytest.add 'Semanticity - remove - should remove the triple', (test) ->
-  id = semanticity.create({col: 'sub',id: 'adfjksajkl'}, 'predicate', {col: 'sub',id:'adfjksajkl'})
+  id = semanticity.create({col: 'sub',id: 'adfjksajkl'}, 'predicate', {col: 'tar',id:'adfjksajkl'})
   semanticity.remove(id)
   test.equal(semanticity.collection.findOne(id), undefined)
 
 
 Tinytest.add 'Semanticity - remove - should not batch remove', (test) ->
-  id = semanticity.create({col: 'sub',id: 'adfjksajkl'}, 'predicate', {col: 'sub',id:'adfjksajkl'})
+  id = semanticity.create({col: 'sub',id: 'adfjksajkl'}, 'predicate', {col: 'tar',id:'adfjksajkl'})
   semanticity.remove([id])
   test.equal(semanticity.collection.findOne(id)._id, id)
 
@@ -87,4 +88,3 @@ Tinytest.add 'Semanticity - core - include Semanticity, mixin should add methods
   include Semanticity, toFoo: ->
     return 'foo'
   test.equal(semanticity.toFoo(), 'foo')
-
