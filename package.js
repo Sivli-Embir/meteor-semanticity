@@ -11,6 +11,6 @@ Package.on_use(function (api) {
 });
 
 Package.on_test(function (api) {
-  api.use(['semanticity','tinytest', 'test-helpers'], ['client', 'server']);
-  api.add_files('tests/tests.js', ['server']);
+  api.use(['semanticity','tinytest', 'test-helpers', 'coffeescript', 'smart-collections'], ['client', 'server']);
+  api.add_files('tests/core-tests.coffee', ['server']);
 });

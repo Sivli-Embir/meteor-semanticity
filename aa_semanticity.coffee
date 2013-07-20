@@ -1,7 +1,7 @@
 class @Semanticity
-  constructor:  (collectionName) ->
-    collectionName ?= 'semanticity_sets'
-    @collection = new Meteor.Collection(collectionName)
+  constructor:  (collectionHandle) ->
+    @collection = collectionHandle
+    @collection ?= new Meteor.Collection('semanticity_sets')
 
   create: (subject, predicate, target) =>
     check(subject, {col: String, id: Match.Any})
@@ -19,7 +19,6 @@ class @Semanticity
   remove: (id) =>
     @collection.remove(id)
 
-# easy way to extend Semanticity, see getters.coffee
 @extend = (obj, mixin) ->
   obj[name] = method for name, method of mixin        
   obj
