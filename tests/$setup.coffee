@@ -1,1 +1,1 @@
-# coffee globales not are globalar in the test dir??? 
+# coffee globals not are global in the test dir??? 
