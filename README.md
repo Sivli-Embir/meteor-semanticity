@@ -19,7 +19,7 @@ Current implementation only uses Meteor Collections to save relations.
 
 Get the package from Atmosphere and instanciate it in your app.
 
-in the console
+in the terminal
 ```
 mrt add semanticity
 ```
@@ -31,14 +31,28 @@ if(Meteor.isServer) {
 ```
 Semanticity runs completely on the server and should not be sent down to the client.
 
-### Custom and Multi Collections
+### Drivers and Collections
+
+By default Semanticity will use its core driver, wich uses Meteor.Collections to create. 
+The diver field takes a switch string and looks for a named driver. 
+If no driver is found (null, 'core', ect) it will use core. 
+
+Additnally it creates the collection "semanticity_sets" by default. 
+The second constructor option lets you overide this.
+
+**Currently there are only the Core and Mock drivers. Feel free to help make more!**
 
 ```
-semanticity = new Semanticity(new Meteor.Collection('custom_named_set');
+semanticity = new Semanticity(null, new Meteor.Collection('custom_named_set');
+```
+You can use any collection you like so long as it is Meteor compatible. 
+Here is an example with [smart-collections](https://github.com/arunoda/meteor-smart-collections).
+```
+semanticity = new Semanticity(null, new Meteor.SmartCollection('custom_named_set');
+```
+Or with Mock driver (for testing, see server/semanticity-mock.coffee)
+```
+semanticity = new Semanticity('mock');
+```
 
-```
-Or with [smart-collections](https://github.com/arunoda/meteor-smart-collections)
-```
-semanticity = new Semanticity(new Meteor.SmartCollection('custom_named_set');
-```
 
