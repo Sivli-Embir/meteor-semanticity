@@ -19,11 +19,11 @@ Current implementaion only uses Meteor Collections to save relations.
 
 Get the package from Atmosphere and instanciate it in your app.
 
-*in the console*
+in the console
 ```
 mrt add semanticity
 ```
-*on the server*
+on the server
 ```
 if(Meteor.isServer) {
   semanticity = new Semanticity();
@@ -31,4 +31,14 @@ if(Meteor.isServer) {
 ```
 Semanticity runs completely on the server and should not be sent down to the client.
 
-### more to come
+### Custom or Multiple Collecitions 
+
+```
+semanticity = new Semanticity(new Meteor.Collection('custom_named_set');
+```
+Or with [smart-collections](https://github.com/arunoda/meteor-smart-collections)
+```
+semanticity = new Semanticity(new Meteor.SmartCollection('custom_named_set');
+```
+
+
