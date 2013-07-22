@@ -5,7 +5,11 @@
 Package.on_use(function (api) {
   api.use('coffeescript', 'server')
   api.use('underscore', 'server')
-  api.add_files(['$semanticity.coffee', 'api.coffee'], 'server');
+  api.add_files([
+    'server/semanticity-core.coffee', 
+    'server/semanticity-mock.coffee',
+    'server/semanticity.coffee'
+    ], 'server');
 });
 
 Package.on_test(function (api) {
