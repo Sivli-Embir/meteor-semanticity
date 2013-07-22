@@ -54,5 +54,13 @@ Or with Mock driver (for testing, see server/semanticity-mock.coffee)
 ```
 semanticity = new Semanticity('mock');
 ```
+### Creating Relationships
 
+### Deleting Relationships
+
+### Publications
+
+### Subscriptions
+
+### Collaboration and adding new drivers
 
