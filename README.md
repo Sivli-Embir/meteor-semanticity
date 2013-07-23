@@ -92,7 +92,7 @@ Meteor.publish("comments", function (postIds) {
   query = { target: {'posts', col: {$in: ids}}, predicate: 'belongs_to', 'subject.col': 'comments' }
   relations = semanticity.find(query)
   commentIds = relations.map(function (c){ return c.subject.id })
-  return Comments.find(query);
+  return Comments.find(commentIds);
 });
 ```
 
