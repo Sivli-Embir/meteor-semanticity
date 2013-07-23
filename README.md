@@ -35,7 +35,7 @@ Use Meteor's Pub-Sub to setup context.
 ### Drivers and Collections
 
 By default Semanticity will use its core driver, which uses Meteor.Collections. 
-The driver  argument takes a switch string and looks for a named driver. 
+The diver argument takes a switch string and looks for a named driver. 
 If no driver is found (null, 'core', ect) it will use core. 
 
 Additionally it creates the collection "semanticity_sets" by default. 
@@ -78,6 +78,23 @@ semanticity.remove(id)
 
 I need to build a SemanticityCursor class that wraps around MeteorCursor. 
 This is the only way to simulate meteor fetch, forEach, and map functions for all drivers.
+
+This example currently only works with core and is subject to change.
+```
+Meteor.publish("comments", function (postIds) {
+  if (!postId) return null;
+  ids = []
+  if (_.isArray(postIds)) {
+    ids = postIds;
+  } else {
+    ids = [postIds]
+  }
+  query = { target: {'posts', col: {$in: ids}}, predicate: 'belongs_to', 'subject.col': 'comments' }
+  relations = semanticity.find(query)
+  commentIds = relations.map(function (c){ return c.subject.id })
+  return Comments.find(query);
+});
+```
 
 ### Subscriptions
 
