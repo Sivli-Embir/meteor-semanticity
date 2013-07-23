@@ -50,13 +50,28 @@ Here is an example with [smart-collections](https://github.com/arunoda/meteor-sm
 ```
 semanticity = new Semanticity(null, new Meteor.SmartCollection('custom_named_set');
 ```
-Or with Mock driver (for testing, see server/semanticity-mock.coffee)
+Or with Mock driver (for stubing out a new driver, see server/semanticity-mock.coffee)
 ```
 semanticity = new Semanticity('mock');
 ```
 ### Creating Relationships
 
-### Deleting Relationships
+```
+subject = {
+subject: { col: 'collection_name', id: 'collection_id'}
+}
+target = {
+target: { col: 'collection_name', id: 'collection_id'}
+}
+predicate = 'relationship_predicate'
+
+id = semanticity.create(subject, predicate, target)
+```
+### Removing Relationships
+
+```
+semanticity.remove(id)
+```
 
 ### Publications
 
