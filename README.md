@@ -34,8 +34,8 @@ Use Meteor's Pub-Sub to setup context.
 
 ### Drivers and Collections
 
-By default Semanticity will use its core driver, which uses Meteor.Collections to create. 
-The diver field takes a switch string and looks for a named driver. 
+By default Semanticity will use its core driver, which uses Meteor.Collections. 
+The driver  argument takes a switch string and looks for a named driver. 
 If no driver is found (null, 'core', ect) it will use core. 
 
 Additionally it creates the collection "semanticity_sets" by default. 
