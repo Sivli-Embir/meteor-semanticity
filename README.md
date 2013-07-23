@@ -3,9 +3,9 @@ Semanticity
 
 [![Build Status](https://travis-ci.org/CMToups/meteor-semanticity.png)](https://travis-ci.org/CMToups/meteor-semanticity)
 
-This package manages resource (collection) relationships in meteor js, via meteorite. Not production ready!
+This package manages resource (collection) relationships in Meteor JS, via Meteorite. Not production ready!
 
-This is a very simple interface that lets you store relationships as subject-predicate-target. 
+This is a very simple interface that lets you store relationships as subject-predicate/predicators-target. 
 Relationships refer to the correlation between two objects stored in one or more **local** collections. 
 It derives from, but is not compliant with, [W3C Semantic Web](http://www.w3.org/standards/semanticweb/) standards.
 
@@ -17,9 +17,9 @@ Current implementation only uses Meteor Collections to save relations.
 
 ### How to setup
 
-Get the package from Atmosphere and instanciate it in your app.
+Get the package from Atmosphere and instantiate it in your app.
 
-in the terminal
+in the terminal *(or use git if you don't use Meteorite)*
 ```
 mrt add semanticity
 ```
@@ -29,15 +29,16 @@ if(Meteor.isServer) {
   semanticity = new Semanticity();
 }
 ```
-Semanticity runs completely on the server and should not be sent down to the client.
+Semanticity runs completely on the server and should not be sent down to the client. 
+Use Meteor's Pub-Sub to setup context.
 
 ### Drivers and Collections
 
-By default Semanticity will use its core driver, wich uses Meteor.Collections to create. 
+By default Semanticity will use its core driver, which uses Meteor.Collections to create. 
 The diver field takes a switch string and looks for a named driver. 
 If no driver is found (null, 'core', ect) it will use core. 
 
-Additnally it creates the collection "semanticity_sets" by default. 
+Additionally it creates the collection "semanticity_sets" by default. 
 The second constructor option lets you overide this.
 
 **Currently there are only the Core and Mock drivers. Feel free to help make more!**
@@ -58,10 +59,10 @@ semanticity = new Semanticity('mock');
 
 ```
 subject = {
-subject: { col: 'collection_name', id: 'collection_id'}
+  subject: { col: 'collection_name', id: 'collection_id'}
 }
 target = {
-target: { col: 'collection_name', id: 'collection_id'}
+  target: { col: 'collection_name', id: 'collection_id'}
 }
 predicate = 'relationship_predicate'
 
@@ -75,7 +76,23 @@ semanticity.remove(id)
 
 ### Publications
 
+I need to build a SemanticityCursor class that wraps around MeteorCursor. 
+This is the only way to simulate meteor fetch, forEach, and map functions for all drivers.
+
 ### Subscriptions
 
-### Collaboration and adding new drivers
+Continuing of the Publication example you should subscribe to the publication.
+This is done like normal but you must make sure to catch the context in a variable.
+```
+Deps.autorun(function () {
+  currentPostComments = Meteor.subscribe("comments", {postId: Session.get("current-post-id")});
+});
+```
+In this case the `currentPostComments` is the sum of all comments that have a belongs_to relationship to the current post.
+You can also reuse the publication to get the comments from more then one post.
 
+### Collaboration and adding new drivers
+All are welcome. 
+If you wish to add a driver I would ask that you create it in separate smart package and overload all the methods in the Mock driver. 
+Users will likely only need one driver so there is no point in polluting their app with useless drivers. This will also help manage dependancies.
+I am still working out the logistics of how to do this.
