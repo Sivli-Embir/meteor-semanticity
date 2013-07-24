@@ -81,7 +81,7 @@ This cursor functions just like the Meteor Collection Cursor and has all the met
 
 ### Publications
 
-While Semanticity can be used anywhere it is best used in the publish function.
+While Semanticity can be used anywhere on the server it is best used in the publish function.
 
 ```
 Meteor.publish("comments", function (postIds) {
