@@ -20,7 +20,25 @@ class @SemanticityCore
     @collection.remove(id)
 
   find: (query, options) =>
-    @collection.find(query, options)
+    new SemanticityCursor @collection.find(query, options)
 
   findOne: (query, options) =>
     @collection.findOne(query, options)
+
+  class SemanticityCursor
+    constructor:  (@cursor) ->
+    
+    map: (callback) =>
+      @cursor.map(callback)
+    forEach: (callback) =>
+      @cursor.forEach(callback)
+    fetch: () =>
+      @cursor.fetch()
+    count: =>
+      @cursor.count()
+    rewind: =>
+      @cursor.rewind()
+    observe: (callback) =>
+      @cursor.observe(callback)
+    observeChanges: (callback) =>
+      @cursor.observeChanges(callback)
