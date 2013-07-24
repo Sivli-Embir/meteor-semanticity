@@ -75,9 +75,9 @@ semanticity.remove(id)
 ```
 ### Find and FindOne
 
-Semanticity implements `find()` and `findOne()` just like Meteor, in the core driver its the same funcitions. 
+Semanticity implements `find()` and `findOne()` just like Meteor, in the core driver they are the same funcitions. 
 One key difference is what is returned is a Semanticity Cursor. 
-This cursor functions just like the Meteor Collection Cursor and has all the methods defind in the Meteor Doc. 
+This cursor functions just like the Meteor Collection Cursor and has all the methods defined in the Meteor Docs. 
 
 ### Publications
 
