@@ -5,12 +5,12 @@ Semanticity
 
 This package manages resource (collection) relationships in Meteor JS, via Meteorite. Not production ready!
 
-This is a very simple interface that lets you store relationships as subject-predicate/predicators-target. 
+This is a very simple interface that lets you store relationships as subject-predicate/predicator-target. 
 Relationships refer to the correlation between two objects stored in one or more **local** collections. 
 It derives from, but is not compliant with, [W3C Semantic Web](http://www.w3.org/standards/semanticweb/) standards.
 
 This is not a triple-store database engine but rather an extension for implementing them. 
-Current implementation only uses Meteor Collections to save relations.
+Current implementation only uses Meteor Collections.
 
 
 
@@ -35,7 +35,7 @@ Use Meteor's Pub-Sub to setup context.
 ### Drivers and Collections
 
 By default Semanticity will use its core driver, which uses Meteor.Collections. 
-The diver argument takes a switch string and looks for a named driver. 
+The driver argument takes a switch string and looks for a named driver. 
 If no driver is found (null, 'core', ect) it will use core. 
 
 Additionally it creates the collection "semanticity_sets" by default. 
@@ -73,13 +73,16 @@ id = semanticity.create(subject, predicate, target)
 ```
 semanticity.remove(id)
 ```
+### Find and FindOne
+
+Semanticity implements `find()` and `findOne()` just like Meteor, in the core driver its the same funcitions. 
+One key difference is what is returned is a Semanticity Cursor. 
+This cursor functions just like the Meteor Collection Cursor and has all the methods defind in the Meteor Doc. 
 
 ### Publications
 
-I need to build a SemanticityCursor class that wraps around MeteorCursor. 
-This is the only way to simulate meteor fetch, forEach, and map functions for all drivers.
+While Semanticity can be used anywhere it is best used in the publish function.
 
-This example currently only works with core and is subject to change.
 ```
 Meteor.publish("comments", function (postIds) {
   if (!postId) return null;
