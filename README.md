@@ -57,6 +57,9 @@ semanticity = new Semanticity('mock');
 ```
 ### Creating Relationships
 
+Subject and target are fields that have nested objects. The nested objects should have the col: and id: fields. 
+The predicate can be any string but it may be wise not to add whitespace. This may become a restriction later.
+
 ```
 subject = {
   subject: { col: 'collection_name', id: 'collection_id'}
@@ -70,18 +73,20 @@ id = semanticity.create(subject, predicate, target)
 ```
 ### Removing Relationships
 
+To remove a relationship call the remove method. This functions like meteor collection remove.
+
 ```
 semanticity.remove(id)
 ```
 ### Find and FindOne
 
-Semanticity implements `find()` and `findOne()` just like Meteor, in the core driver they are the same funcitions. 
+Semanticity implements `find()` and `findOne()` just like Meteor, in the core driver they are the same methods. 
 One key difference is what is returned is a Semanticity Cursor. 
 This cursor functions just like the Meteor Collection Cursor and has all the methods defined in the Meteor Docs. 
 
 ### Publications
 
-While Semanticity can be used anywhere on the server it is best used in the publish function.
+While Semanticity can be used anywhere on the server it is best used in the publish mothods.
 
 ```
 Meteor.publish("comments", function (postIds) {
@@ -110,6 +115,11 @@ Deps.autorun(function () {
 ```
 In this case the `currentPostComments` is the sum of all comments that have a belongs_to relationship to the current post.
 You can also reuse the publication to get the comments from more then one post.
+
+### TODO
+* Add at least one driver.
+* Clean up and reduce the README, also create a wiki.
+* Add indexs.
 
 ### Collaboration and adding new drivers
 All are welcome. 
