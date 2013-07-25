@@ -1,9 +1,9 @@
 {
   "name": "semanticity",
-  "description": "A triple relationship API for local resources",
+  "description": "A relationship interface for local resources",
   "homepage": "https://github.com/CMToups/meteor-semanticity",
   "author": "Conner Meissner-Toups",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "git": "https://github.com/CMToups/meteor-semanticity.git",
   "packages": {}
 }
