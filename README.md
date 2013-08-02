@@ -102,15 +102,13 @@ Meteor.publish("comments", function (postIds) {
 
 ### Subscriptions
 
-Continuing of the Publication example you should subscribe to the publication.
-This is done like normal but you must make sure to catch the context in a variable.
+Continuing from the Publication example you should subscribe to the publication.
 ```
 Deps.autorun(function () {
   currentPostComments = Meteor.subscribe("comments", {postId: Session.get("current-post-id")});
 });
 ```
-In this case the `currentPostComments` is the sum of all comments that have a belongs_to relationship to the current post.
-You can also reuse the publication to get the comments from more then one post.
+
 
 ### TODO
 * Add at least one driver.
