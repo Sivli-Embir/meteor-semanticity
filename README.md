@@ -29,8 +29,7 @@ if(Meteor.isServer) {
   semanticity = new Semanticity();
 }
 ```
-Semanticity runs completely on the server and should not be sent down to the client. 
-Use Meteor's Pub-Sub to setup context.
+Semanticity _now_ runs on the server and the client. 
 
 ### Drivers and Collections
 
@@ -80,35 +79,47 @@ Semanticity implements `find()` and `findOne()` just like Meteor, in the core dr
 One key difference is what is returned is a Semanticity Cursor. 
 This cursor functions just like the Meteor Collection Cursor and has all the methods defined in the Meteor Docs. 
 
-### Publications
-
-While Semanticity can be used anywhere on the server it is best used in the publish mothods.
-
-```
-Meteor.publish("comments", function (postIds) {
-  if (!postId) return null;
-  ids = []
-  if (_.isArray(postIds)) {
-    ids = postIds;
-  } else {
-    ids = [postIds]
-  }
-  query = { target: {'posts', col: {$in: ids}}, predicate: 'belongs_to', 'subject.col': 'comments' }
-  relations = semanticity.find(query)
-  commentIds = relations.map(function (c){ return c.subject.id })
-  return Comments.find(commentIds);
-});
-```
-
 ### Subscriptions
 
-Continuing from the Publication example you should subscribe to the publication.
 ```
+Meteor.subscribe("posts");
+
 Deps.autorun(function () {
-  currentPostComments = Meteor.subscribe("comments", {postId: Session.get("current-post-id")});
+  ids =  Posts.find({}).map(function(col) { return col._id})
+  Meteor.subscribe("semanticity", {ids: ids, name: 'posts'})
+  
+  //Assuming you have set Session.get('currentPostId')
+  
+  ids = semanticity.find({
+    'subject.col': 'comments', 
+    predicate: 'belongs_to', 
+    target: {col: 'posts', id: Session.get('currentPostId')} 
+  }).map(function (col) {
+    return col.subject.id
+  });
+  
+  if (! _.isEmpty(ids)) { Meteor.subscribe('comments', ids); }
 });
 ```
+### Publications
 
+```
+Meteor.publish("posts", function () {
+  return Posts.find({});
+});
+
+Meteor.publish("semanticity", function (collection) {
+  //this is kinda crazy to ask users to define, this needs to be a method call.
+  return semanticity.find({$or: [
+    {'target.col': collection.name, 'target.id': {$in: collection.ids}}, 
+    {'subject.col': collection.name, 'subject.id': {$in: collection.ids} }] 
+  }).cursor; //for now be sure to call .cursor on the SemanticityCursor, this returns the Meteor cursor and all its ractive goodness.
+});
+
+Meteor.publish("comments", function (ids) { 
+  return Comments.find({_id: {$in: ids}});
+});
+```
 
 ### TODO
 * Add at least one driver.
