@@ -7,7 +7,7 @@ class @SemanticityCore
     check(subject, {col: String, id: Match.Any})
     check(predicate, String)
     check(target, {col: String, id: Match.Any})
-    if meta then check(meta, Array)
+    if meta then check(meta, Object)
 
     if not subject.col then throw 'subject collection name undefined'
     if not subject.id then throw 'subject id name undefined'
