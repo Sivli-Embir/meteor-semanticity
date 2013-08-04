@@ -3,13 +3,13 @@
 });
  
 Package.on_use(function (api) {
-  api.use('coffeescript', 'server')
-  api.use('underscore', 'server')
+  api.use('coffeescript', ['client','server'])
+  api.use('underscore', ['client','server'])
   api.add_files([
-    'server/semanticity-core.coffee', 
-    'server/semanticity-mock.coffee',
-    'server/semanticity.coffee'
-    ], 'server');
+    'lib/semanticity-core.coffee', 
+    'lib/semanticity-mock.coffee',
+    'lib/semanticity.coffee'
+    ], ['client','server']);
 });
 
 Package.on_test(function (api) {
