@@ -25,7 +25,7 @@ Tinytest.add 'Semanticity - core - constructor should take any kind of collectio
 
 Tinytest.add 'Semanticity - create - should create a valid triple', (test) ->
   id = semanticity.create({col: 'sub',id: 'adfjksajkl'}, 'predicate', {col: 'tar',id:'adfjksajkl'})
-  test.equal({"subject":{col:"sub", id:"adfjksajkl"}, predicate:"predicate", target:{col:"tar", id:"adfjksajkl"}, _id: id}, semanticity.collection.findOne(id))
+  test.equal({"subject":{col:"sub", id:"adfjksajkl"}, predicate:"predicate", target:{col:"tar", id:"adfjksajkl"}, meta: null, _id: id}, semanticity.collection.findOne(id))
 
 
 Tinytest.add 'Semanticity - create - should not create a triple if field not given', (test) ->
