@@ -1,6 +1,14 @@
 Semanticity
 ==================
 
+This package is on hold until I figure out how to manage better: collection joins, improve speed, improve security, and massively simplify the api. I have not actively worked on it in a while and it is not compatible with meteor 0.6.*+
+I do not wish to abandon this project and I have some significant philosophical changes planned. If you are interested in this project, or worse, if you are actually using it, please let me know.
+
+====
+
+
+
+
 [![Build Status](https://travis-ci.org/CMToups/meteor-semanticity.png)](https://travis-ci.org/CMToups/meteor-semanticity)
 
 This package manages resource (collection) relationships in Meteor JS, via Meteorite. Not production ready!
